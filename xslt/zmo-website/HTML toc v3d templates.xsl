@@ -11,7 +11,6 @@
         - changed the second map to the Simile map -->
     
     <xsl:template name="templTOCDiv">
-        <xsl:variable name="vLastItemDate" select="((.//revisionDesc//item) [last()])"/>
         <html>
             <xsl:call-template name="templHead"/>
             <body>
@@ -36,9 +35,6 @@
     </xsl:template>
     
     <xsl:template name="templTOCDiv2">
-        <xsl:variable name="vLastItemDate" select="((.//revisionDesc//item) [last()])">
-            
-        </xsl:variable>
         <html>
             <xsl:call-template name="templHead"/>
             <body>
@@ -77,7 +73,7 @@
             <title>TOC</title>
             <link rel="stylesheet" href="..//CSS/zmo.css" type="text/css"/>
             <link rel="stylesheet" href="..//CSS/zmo_jaraid.css" type="text/css"/>
-            <link rel="stylesheet" href="http://sitzextase.de/jaraid//CSS/ja-hidden visible.css" type="text/css"/>
+            <link rel="stylesheet" href="https://projectjaraid.github.io/CSS/ja-hidden visible.css" type="text/css"/>
         </head>
     </xsl:template>
     <xsl:template name="templIndexes">
@@ -103,7 +99,7 @@
     </xsl:template>
     
     <xsl:template name="templUpdate">
-        <xsl:if test=".//revisionDesc//item">
+        <xsl:if test="ancestor::tei:TEI//revisionDesc//item">
             <xsl:variable name="vLastItem" select="((.//revisionDesc//item) [last()])"/>
             <xsl:variable name="vLastDate" select="$vLastItem/date/@when"/>
             <p style="color:red">
@@ -115,8 +111,8 @@
                 </span>
             </p>
         </xsl:if>
-        <xsl:if test=".//revisionDesc/change">
-            <xsl:variable name="vLastItem" select="((.//revisionDesc/change) [last()])"/>
+        <xsl:if test="ancestor::tei:TEI//revisionDesc/change">
+            <xsl:variable name="vLastItem" select=".//revisionDesc/change[max(@when)]"/>
             <xsl:variable name="vLastDate" select="$vLastItem/@when"/>
             <p style="color:red">
                 <span>

@@ -87,7 +87,7 @@
             <title>TOC</title>
             <link rel="stylesheet" href="..//CSS/zmo.css" type="text/css"/>
             <link rel="stylesheet" href="..//CSS/zmo_jaraid.css" type="text/css"/>
-            <link rel="stylesheet" href="http://sitzextase.de/jaraid//CSS/ja-hidden visible.css" type="text/css"/>
+            <link rel="stylesheet" href="https://projectjaraid.github.io/CSS/ja-hidden visible.css" type="text/css"/>
         </head>
     </xsl:template>
     <xsl:template name="templUpdate">
