@@ -18,7 +18,7 @@
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>Jaraid ZMO delivered</String>
+                                        <String>Jaraid current development</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -156,7 +156,7 @@
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>file:/BachUni/projekte/Arabic%20newspaper%20archive/Website/jaraid%20development/XSLT/RSS%20v1d.xsl</String>
+                                    <String>${pdu}/xslt/zmo-website/RSS%20v1d.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
                                     <String>${currentFileURL}</String>
