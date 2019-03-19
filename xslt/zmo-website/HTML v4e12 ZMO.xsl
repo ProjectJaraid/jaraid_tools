@@ -15,9 +15,10 @@
  <!-- v4e12 added a new subpage and toc for the contributors -->
 
 
-    <xsl:include href="/BachUni/projekte/XML/Functions/BachFunctions v3.xsl"/>
+    <xsl:include href="/BachUni/programming/XML/Functions/BachFunctions v3.xsl"/>
     <!-- <xsl:include href="..//XSLT/HTML indexes v2d templates 120425.xsl"/> -->
-    <xsl:include href="..//XSLT/HTML anchors v1b templates.xsl"/>
+    <!-- the path to the following stylesheets has changed -->
+    <!--<xsl:include href="..//XSLT/HTML anchors v1b templates.xsl"/>
     <xsl:include href="..//XSLT/HTML indexes v2e templates 120530.xsl"/>
     <xsl:include href="..//XSLT/HTML indexes v4c templates.xsl"/>
     <xsl:include href="..//XSLT/HTML toc v2 templates 120615.xsl"/>
@@ -25,7 +26,16 @@
     <xsl:include href="..//XSLT/HTML tables v1a templates 120426.xsl"/>
     <xsl:include href="..//XSLT/HTML tables v6a templates.xsl"/>
     <xsl:include href="..//XSLT/HTML tei v2d templates.xsl"/>
-    <xsl:include href="..//XSLT/HTML revisions v1a templates.xsl"/>
+    <xsl:include href="..//XSLT/HTML revisions v1a templates.xsl"/>-->
+    <xsl:include href="HTML%20anchors%20v1b%20templates.xsl"/>
+    <xsl:include href="HTML%20indexes%20v2e%20templates%20120530.xsl"/>
+    <xsl:include href="HTML%20indexes%20v4c%20templates.xsl"/>
+    <xsl:include href="HTML%20toc%20v2%20templates%20120615.xsl"/>
+    <xsl:include href="HTML%20toc%20v3d%20templates.xsl"/>
+    <xsl:include href="HTML%20tables%20v1a%20templates%20120426.xsl"/>
+    <xsl:include href="HTML%20tables%20v6a%20templates.xsl"/>
+    <xsl:include href="HTML%20tei%20v2d%20templates.xsl"/>
+    <xsl:include href="HTML%20revisions%20v1a%20templates.xsl"/>
     <xsl:variable name="vgRoot" select="TEI"/>
     <xsl:variable name="vgOrg" select=".//body//orgName"/>
     <xsl:variable name="vgPers" select=".//body//persName"/>
