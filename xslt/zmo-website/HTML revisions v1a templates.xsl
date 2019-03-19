@@ -8,12 +8,7 @@
     >
     <xsl:output  method="html" doctype-public="html" encoding="UTF-8" indent="yes"/>
     
-    <xsl:variable name="vgRSS" select="document('..//RSS/rss-jaraid.xml')"/>
-    <xsl:variable name="vgDate">
-        <xsl:element name="tei:date"> <!-- this is the most important part to make the processor recognise the string as date!!! -->
-            <xsl:value-of select="$vgRSS//pubDate"/>
-        </xsl:element>
-    </xsl:variable>
+    <xsl:variable name="vgRSS" select="document('https://projectjaraid.github.io/RSS/rss-jaraid.xml')"/>
     <xsl:variable name="pgSortMonth" select="'&lt; Jan &lt; Feb &lt; Mar &lt; Apr &lt; May &lt; Jun &lt; Jul &lt; Aug &lt; Sep &lt; Oct &lt; Nov &lt; Dec'"/>
    
         
