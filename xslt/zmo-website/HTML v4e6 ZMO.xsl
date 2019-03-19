@@ -13,14 +13,15 @@
  <!-- v4e6 is the production version for the website published by the ZMO -->
     
     <!-- <xsl:include href="..//XSLT/HTML indexes v2d templates 120425.xsl"/> -->
-    <xsl:include href="..//XSLT/HTML anchors v1b templates.xsl"/>
-    <xsl:include href="..//XSLT/HTML indexes v2e templates 120530.xsl"/>
-    <xsl:include href="..//XSLT/HTML indexes v4b templates.xsl"/>
-    <xsl:include href="..//XSLT/HTML toc v2 templates 120615.xsl"/>
-    <xsl:include href="..//XSLT/HTML toc v3a1 templates.xsl"/>
-    <xsl:include href="..//XSLT/HTML tables v1a templates 120426.xsl"/>
-    <xsl:include href="..//XSLT/HTML tables v4b templates.xsl"/>
-    <xsl:include href="..//XSLT/HTML tei v1b templates.xsl"/> <!-- tei v2 already integrates the internal links -->
+    <xsl:include href="HTML%20anchors%20v1b%20templates.xsl"/>
+    <xsl:include href="HTML%20indexes%20v2e%20templates%20120530.xsl"/>
+    <xsl:include href="HTML%20indexes%20v4b%20templates.xsl"/>
+    <xsl:include href="HTML%20toc%20v2%20templates%20120615.xsl"/>
+    <xsl:include href="HTML%20toc%20v3a1%20templates.xsl"/>
+    <xsl:include href="HTML%20tables%20v1a%20templates%20120426.xsl"/>
+    <xsl:include href="HTML%20tables%20v4b%20templates.xsl"/>
+    <xsl:include href="HTML%20tei%20v1b%20templates.xsl"/>
+    <!-- tei v2 already integrates the internal links -->
     <xsl:variable name="vgRoot" select="TEI"/>
     <xsl:variable name="vgOrg" select=".//body//orgName"/>
     <xsl:variable name="vgPers" select=".//body//persName"/>
