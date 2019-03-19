@@ -15,10 +15,9 @@
         <xsl:result-document href="..//RSS/rss-data.xml">
             <xsl:element name="rss">
                 <xsl:attribute name="version">2.0</xsl:attribute>
-
                 <xsl:element name="channel">
                     <xsl:call-template name="templHead"/>
-                    <xsl:call-template name="templItem"/>
+                    <xsl:apply-templates select="tei:teiHeader/tei:revisionDesc/tei:change"/>
                 </xsl:element>
             </xsl:element>
         </xsl:result-document>
@@ -27,7 +26,7 @@
                 <xsl:attribute name="version">2.0</xsl:attribute>
                 <xsl:element name="channel">
                     <xsl:call-template name="templHead"/>
-                    <xsl:call-template name="templItem"/>
+                    <xsl:apply-templates select="tei:teiHeader/tei:revisionDesc/tei:change"/>
                     <xsl:call-template name="templWebsiteRSS"/>
                 </xsl:element>
             </xsl:element>
@@ -62,51 +61,49 @@
             <xsl:text>60</xsl:text>
         </xsl:element>
         <xsl:element name="atom:link">
-            <xsl:attribute name="href"
-                >http://www.sitzextase.de/jaraid/RSS/rss-jaraid.xml</xsl:attribute>
+            <xsl:attribute name="href">https://projectjaraid.github.io/RSS/rss-jaraid.xml</xsl:attribute>
             <xsl:attribute name="rel">self</xsl:attribute>
             <xsl:attribute name="type">application/rss+xml</xsl:attribute>
         </xsl:element>
     </xsl:template>
-
-    <xsl:template name="templItem">
-        <xsl:for-each select=".//tei:revisionDesc/tei:change">
-            <xsl:element name="item">
-                <xsl:attribute name="type">tei</xsl:attribute>
-                <xsl:element name="title">
-                    <xsl:text>Updated data</xsl:text>
-                </xsl:element>
-                <!-- <xsl:element name="link"/> -->
-                <xsl:element name="description">
-                    <xsl:value-of select="."/>
-                    <xsl:apply-templates select="./@who"/>
-                </xsl:element>
-                <xsl:element name="pubDate">
-                    <!-- this is a template / variable able to translate ISO dates to RFC dates -->
-                    <xsl:apply-templates select="./@when"/>
-                </xsl:element>
-                <xsl:element name="guid">
-                    <xsl:text>http://www.zmo.de/jaraid#item</xsl:text>
-                    <!-- this is a random address  -->
-                    <xsl:value-of select="format-number(number(position()),'000')"/>
-                </xsl:element>
-                <!-- <xsl:element name="author"/> -->
+    
+    <!-- transform TEI documentation into RSS items -->
+    <xsl:template match="tei:change">
+        <xsl:element name="item">
+            <xsl:attribute name="type" select="'tei'"/>
+            <xsl:element name="title">
+                <xsl:text>Updated data</xsl:text>
             </xsl:element>
-        </xsl:for-each>
+            <!-- <xsl:element name="link"/> -->
+            <xsl:element name="description">
+                <xsl:value-of select="."/>
+                <xsl:text>. </xsl:text>
+                <xsl:apply-templates select="./@who"/>
+            </xsl:element>
+            <xsl:element name="pubDate">
+                <!-- this is a template / variable able to translate ISO dates to RFC dates -->
+                <xsl:apply-templates select="./@when"/>
+            </xsl:element>
+            <xsl:element name="guid">
+                <xsl:text>http://www.zmo.de/jaraid#item</xsl:text>
+                <!-- this is a random address  -->
+                <xsl:value-of select="format-number(number(position()),'000')"/>
+            </xsl:element>
+            <!-- <xsl:element name="author"/> -->
+        </xsl:element>
     </xsl:template>
 
     <xsl:template name="templWebsiteRSS">
-        <xsl:copy-of select="document('..//RSS/rss-website.xml')//item"/>
+        <xsl:copy-of select="document('https://projectjaraid.github.io/RSS/rss-website.xml')//item"/>
         <!-- somehow, I cannot address child nodes. document('..//RSS/rss-website.xml') works. I presume the reason to be that the two source files use different namespaces -->
     </xsl:template>
 
     <xsl:template match="@who">
-        <xsl:variable name="vResp" select="."/>
-        <xsl:text>
-            Responsible editor: </xsl:text>
+        <xsl:variable name="vResp" select="substring-after(.,'#')"/>
+        <xsl:text>Responsible editor: </xsl:text>
         <!-- <xsl:value-of select="//tei:persName[@xml:id=substring-after($vResp,'#')]"/> -->
 
-        <xsl:for-each select="//tei:editionStmt//tei:persName[contains($vResp, @xml:id)]">
+        <xsl:for-each select="//tei:editionStmt//tei:persName[@xml:id = $vResp]">
             <xsl:value-of select="."/>
             <xsl:if test="position()!=last()">
                 <xsl:text>, </xsl:text>
@@ -118,8 +115,8 @@
         <xsl:variable name="vDateRFC822">
             <!-- E.g. "Wed, 2 Oct 2012 08:30:00 +0200" -->
             <xsl:value-of select="format-date(.,'[F,*-3], [D1] [MNn,*-3] [Y0001]')"/>
-            <xsl:text> 08:30:00 +0200</xsl:text>
             <!-- this produces the fake timestamp -->
+            <xsl:text> 08:30:00 +0200</xsl:text>
         </xsl:variable>
         <xsl:variable name="vDateISO">
             <!-- E.g. "2012-10-02" -->
@@ -128,4 +125,3 @@
         <xsl:value-of select="$vDateRFC822"/>
     </xsl:template>
 </xsl:stylesheet>
-<?oxy_options track_changes="on"?>
