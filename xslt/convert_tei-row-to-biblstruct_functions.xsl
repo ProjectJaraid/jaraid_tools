@@ -20,9 +20,9 @@
                         <!-- title(s) -->
                         <xsl:apply-templates mode="m_bibl" select="$tei_row/tei:cell[@n=4]/tei:name"/>
                         <!-- language -->
-                        <xsl:if test="$tei_row/descendant::tei:lang">
-                            <!-- the basis for inclusion in al-Jarāʾid is a periodical being published in Arabic -->
-                            <textLang mainLang="ar">
+                        <!-- the basis for inclusion in al-Jarāʾid is a periodical being published in Arabic -->
+                        <textLang mainLang="ar">
+                            <xsl:if test="$tei_row/descendant::tei:lang">
                                 <xsl:attribute name="otherLangs">
                                     <xsl:for-each select="$tei_row/descendant::tei:lang">
                                         <xsl:value-of select="pj:translate-language-codes(.)"/>
@@ -31,8 +31,8 @@
                                         </xsl:if>
                                     </xsl:for-each>
                                 </xsl:attribute>
-                            </textLang>
-                        </xsl:if>
+                            </xsl:if>
+                        </textLang>
                         <!-- editor(s) -->
                         <xsl:apply-templates mode="m_bibl" select="$tei_row/tei:cell[@n=6]/tei:persName"/>
                         <imprint>
