@@ -15,10 +15,16 @@
     <!-- transform rows into biblStruct -->
     <xsl:function name="pj:transform-row-to-biblstruct">
         <xsl:param name="tei_row"/>
-        <biblStruct xml:id="biblStruct_{$tei_row/@xml:id}">
+        <biblStruct type="periodical" xml:id="biblStruct_{$tei_row/@xml:id}">
+            <xsl:apply-templates select="$tei_row/@resp" mode="m_identity-transform"/>
                     <monogr>
                         <!-- title(s) -->
                         <xsl:apply-templates mode="m_bibl" select="$tei_row/tei:cell[@n=4]/tei:name"/>
+                        <!-- ID -->
+                        <xsl:element name="idno">
+                            <xsl:attribute name="type" select="'jaraid'"/>
+                            <xsl:value-of select="$tei_row/@xml:id"/>
+                        </xsl:element>
                         <!-- language -->
                         <!-- the basis for inclusion in al-Jarāʾid is a periodical being published in Arabic -->
                         <textLang mainLang="ar">
@@ -45,8 +51,31 @@
                             <xsl:apply-templates mode="m_bibl" select="$tei_row/tei:cell[@n=3]/tei:date"/>
                         </imprint>
                     </monogr>
+            <!-- add note with comments on holdings etc. -->
+            <xsl:apply-templates mode="m_notes" select="$tei_row/tei:cell[@n=7]"/> 
+            <xsl:apply-templates mode="m_notes" select="$tei_row/tei:cell[@n=8]"/> 
+            <xsl:apply-templates mode="m_notes" select="$tei_row/tei:cell[@n=9]"/> 
                 </biblStruct>
     </xsl:function>
+    <!-- notes -->
+    <xsl:template match="tei:cell" mode="m_notes">
+        <xsl:element name="note">
+            <xsl:attribute name="type">
+                <xsl:choose>
+                    <xsl:when test="@n = 7">
+                        <xsl:text>comment</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="@n = 8">
+                        <xsl:text>sources</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="@n = 9">
+                        <xsl:text>holdings</xsl:text>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:attribute>
+            <xsl:apply-templates/>
+        </xsl:element>
+    </xsl:template>
     <!-- transform languages to BCP47-->
     <xsl:function name="pj:translate-language-codes">
         <xsl:param name="tei_text"/>
