@@ -27,7 +27,7 @@
     </xsl:template>
     
     
-    <xsl:template match="tei:row">
+    <xsl:template match="tei:row[@role = 'data']">
         <xsl:copy>
             <!-- reproduce the current content -->
             <xsl:apply-templates select="@* | node()"/>
@@ -94,6 +94,9 @@
                 <xsl:when test="$v_type = 'place'">
                     <xsl:copy-of select="$p_authority-file/descendant::tei:place[tei:idno[@type = $v_authority] = $v_id]"/>
                 </xsl:when>
+                <xsl:when test="$v_type = 'org'">
+                    <xsl:copy-of select="$p_authority-file/descendant::tei:org[tei:idno[@type = $v_authority] = $v_id]"/>
+                </xsl:when>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="v_entity-name">
@@ -104,32 +107,18 @@
                 <xsl:when test="$v_type = 'place'">
                     <xsl:copy-of select="$v_entity/descendant::tei:placeName[@xml:lang = $p_target-lang][1]"/>
                 </xsl:when>
+                <xsl:when test="$v_type = 'org'">
+                    <xsl:copy-of select="$v_entity/descendant::tei:orgName[@xml:lang = $p_target-lang][1]"/>
+                </xsl:when>
             </xsl:choose>
         </xsl:variable>
         <!-- output -->
-        <xsl:apply-templates select="$v_entity-name" mode="m_copy-from-authority-file"/>
-    </xsl:function>
-    
-    <xsl:template match="tei:persName | tei:orgName | tei:placeName" mode="m_copy-from-authority-file">
-        <xsl:variable name="v_authority" select="'jaraid'"/>
-        <xsl:copy>
-            <xsl:apply-templates select="@*" mode="m_copy-from-authority-file"/>
-            <xsl:attribute name="ref">
-                <xsl:choose>
-                    <xsl:when test="self::tei:persName">
-                        <xsl:value-of select="concat($v_authority, ':pers:', parent::node()/tei:idno[@type = $v_authority])"/>
-                    </xsl:when>
-                    <xsl:when test="self::tei:placeName">
-                        <xsl:value-of select="concat($v_authority, ':place:', parent::node()/tei:idno[@type = $v_authority])"/>
-                    </xsl:when>
-                    <xsl:when test="self::tei:orgName">
-                        <xsl:value-of select="concat($v_authority, ':org:', parent::node()/tei:idno[@type = $v_authority])"/>
-                    </xsl:when>
-                </xsl:choose>
-            </xsl:attribute>
-            <xsl:apply-templates mode="m_copy-from-authority-file"/>
+        <xsl:copy select="$p_name">
+            <xsl:copy-of select="$p_name/@ref"/>
+            <xsl:attribute name="xml:lang" select="$p_target-lang"/>
+            <xsl:apply-templates select="$v_entity-name/descendant-or-self::tei:persName/node() | $v_entity-name/descendant-or-self::tei:placeName/node()" mode="m_copy-from-authority-file"/>
         </xsl:copy>
-    </xsl:template>
+    </xsl:function>
     
     <xsl:template match="node() | @*" mode="m_copy-from-authority-file">
         <xsl:copy>
