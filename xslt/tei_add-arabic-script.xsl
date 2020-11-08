@@ -39,19 +39,22 @@
         </xsl:copy>
     </xsl:template>
     
-    <xsl:template match="node()[@xml:lang='ar-Latn-x-ijmes']" mode="m_translate">
+    <xsl:template match="node()[@xml:lang='ar-Latn-x-ijmes'][not(@type = 'flattened')]" mode="m_translate">
         <xsl:variable name="v_self-arabic">
             <xsl:value-of select="oape:string-transliterate-ijmes-to-arabic(.)"/>
         </xsl:variable>
         <!-- reproduce content -->
         <xsl:copy-of select="."/>
-        <!-- add arabic script -->
-        <xsl:copy>
-            <xsl:apply-templates select="@*" mode="m_duplicate"/>
-            <xsl:attribute name="change" select="concat('#', $p_id-change)"/>
-            <xsl:attribute name="xml:lang" select="'ar'"/>
-            <xsl:value-of select="normalize-space($v_self-arabic)"/>
-        </xsl:copy>
+        <!-- check if a version in Arabic script is already there -->
+        <xsl:if test="not(parent::node()/child::node()[@xml:lang = 'ar'])">
+            <!-- add arabic script -->
+            <xsl:copy>
+                <xsl:apply-templates select="@*" mode="m_duplicate"/>
+                <xsl:attribute name="change" select="concat('#', $p_id-change)"/>
+                <xsl:attribute name="xml:lang" select="'ar'"/>
+                <xsl:value-of select="normalize-space($v_self-arabic)"/>
+            </xsl:copy>
+        </xsl:if>
     </xsl:template>
     
     <!-- generate documentation of change -->
