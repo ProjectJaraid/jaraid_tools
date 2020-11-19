@@ -30,6 +30,10 @@
                         <Boolean>true</Boolean>
                     </entry>
                     <entry>
+                        <String>editor.line.width</String>
+                        <Integer>200</Integer>
+                    </entry>
+                    <entry>
                         <String>editor.sort.attributes</String>
                         <Boolean>true</Boolean>
                     </entry>
