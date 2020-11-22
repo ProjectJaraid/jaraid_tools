@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="21.1">
+<project version="22.1">
     <meta>
         <filters directoryPatterns="" filePatterns="\Qproject-jaraid.xpr\E" positiveFilePatterns="" showHiddenFiles="false"/>
         <options>
-            <serialized version="21.1" xml:space="preserve">
+            <serialized version="22.1" xml:space="preserve">
                 <serializableOrderedMap>
                     <entry>
                         <String>editor.font</String>
                         <String>Lucida Sans Unicode,0,13</String>
                     </entry>
                     <entry>
+                        <String>editor.format.break.long.attributes</String>
+                        <Boolean>false</Boolean>
+                    </entry>
+                    <entry>
                         <String>editor.format.indent.inline.elements</String>
                         <Boolean>false</Boolean>
+                    </entry>
+                    <entry>
+                        <String>editor.format.mixed.content.elements</String>
+                        <String-array>
+                            <String>tei:l</String>
+                        </String-array>
                     </entry>
                     <entry>
                         <String>editor.format.on.open</String>
@@ -28,6 +38,14 @@
                     <entry>
                         <String>editor.format.preserve.text.as.it.is</String>
                         <Boolean>true</Boolean>
+                    </entry>
+                    <entry>
+                        <String>editor.indent.in.preserve.space.elements</String>
+                        <Boolean>false</Boolean>
+                    </entry>
+                    <entry>
+                        <String>editor.indent.on.paste</String>
+                        <Boolean>false</Boolean>
                     </entry>
                     <entry>
                         <String>editor.line.width</String>
@@ -69,6 +87,9 @@
                                     <list>
                                         <String>XSL</String>
                                     </list>
+                                </field>
+                                <field name="scenarioStorageLocations">
+                                    <list/>
                                 </field>
                             </scenarioAssociation>
                         </scenarioAssociation-array>
