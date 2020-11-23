@@ -30,10 +30,14 @@
     <xsl:template match="tei:row[@role = 'data']">
         <xsl:copy>
             <!-- reproduce the current content -->
+            <!-- IMPORTANT: in order for the automatically generated columns not being stacked ad infitum, they must be overwritten -->
             <xsl:apply-templates select="@* | node()"/>
             <!-- add rows for Arabic -->
             <!-- titles -->
-            <xsl:apply-templates select="tei:cell[@n = 4]" mode="m_add-arabic"/>
+            <!-- if Arabic titles are already present, they shall not be replaced -->
+            <xsl:if test="not(tei:cell[@n = 10]/node())">
+                <xsl:apply-templates select="tei:cell[@n = 4]" mode="m_add-arabic"/>
+            </xsl:if>
             <!-- persons, organisations -->
             <xsl:apply-templates select="tei:cell[@n = 6]" mode="m_add-arabic"/>
             <!-- places -->
@@ -41,7 +45,10 @@
         </xsl:copy>
     </xsl:template>
     
-    <xsl:template match="tei:cell" mode="m_add-arabic">
+    <!-- previously generated Arabic columns shall be overwritten -->
+    <xsl:template match="tei:row[@role = 'data']/tei:cell[@n = (11, 12)]"/>
+    
+    <xsl:template match="tei:row[@role = 'data']/tei:cell" mode="m_add-arabic">
         <xsl:copy>
             <!-- document change -->
             <xsl:attribute name="change" select="concat('#',$p_id-change)"/>
@@ -84,8 +91,8 @@
         <xsl:param name="p_authority-file"/>
         <xsl:param name="p_target-lang"/>
         <xsl:variable name="v_authority" select="'jaraid'"/>
-        <xsl:variable name="v_type" select="replace($p_name/@ref, 'jaraid:(\w+):\d+', '$1')"/>
-        <xsl:variable name="v_id" select="replace($p_name/@ref, 'jaraid:\w+:(\d+)', '$1')"/>
+        <xsl:variable name="v_type" select="replace($p_name/@ref, '.*jaraid:(\w+):\d+.*', '$1')"/>
+        <xsl:variable name="v_id" select="replace($p_name/@ref, '.*jaraid:\w+:(\d+).*', '$1')"/>
         <xsl:variable name="v_entity">
             <xsl:choose>
                 <xsl:when test="$v_type = 'pers'">
