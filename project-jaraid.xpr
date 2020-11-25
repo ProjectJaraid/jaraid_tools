@@ -56,6 +56,10 @@
                         <Boolean>true</Boolean>
                     </entry>
                     <entry>
+                        <String>enable.project.master.files.support</String>
+                        <Boolean>true</Boolean>
+                    </entry>
+                    <entry>
                         <String>font.for.author.v12</String>
                         <String>Lucida Sans Unicode,0,14</String>
                     </entry>
@@ -89,7 +93,9 @@
                                     </list>
                                 </field>
                                 <field name="scenarioStorageLocations">
-                                    <list/>
+                                    <list>
+                                        <Byte>2</Byte>
+                                    </list>
                                 </field>
                             </scenarioAssociation>
                         </scenarioAssociation-array>
