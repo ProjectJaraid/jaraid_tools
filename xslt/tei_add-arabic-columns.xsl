@@ -77,6 +77,9 @@
     
     <xsl:template match="tei:persName | tei:placeName" mode="m_add-arabic">
         <xsl:copy-of select="pj:entity-names_get-version-from-authority-file(., $v_file-entities-master, 'ar')"/>
+        <xsl:if test="following-sibling::tei:persName | following-sibling::tei:persName">
+            <xsl:text>, </xsl:text>
+        </xsl:if>
     </xsl:template>
     <xsl:template match="tei:name" mode="m_add-arabic">
         <xsl:element name="title">
