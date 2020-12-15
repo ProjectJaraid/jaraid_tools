@@ -51,7 +51,8 @@
     <xsl:template match="tei:row[@role = 'data']/tei:cell" mode="m_add-arabic">
         <xsl:copy>
             <!-- document change -->
-            <xsl:attribute name="change" select="concat('#',$p_id-change)"/>
+            <!-- NOTE: as this XSLT is used by a GitHub action, it is frequently run and will infest the master files with <change> nodes. I, therefore removed the documentation -->
+            <!-- <xsl:attribute name="change" select="concat('#',$p_id-change)"/> -->
             <!-- add new column numbers -->
             <xsl:choose>
                 <!-- titles -->
@@ -67,17 +68,17 @@
                 <!-- persons, organisations -->
                 <xsl:when test="@n = 6">
                     <xsl:attribute name="n" select="11"/>
+                    <xsl:apply-templates select="tei:orgName" mode="m_add-arabic"/>
                     <xsl:apply-templates select="tei:persName" mode="m_add-arabic"/>
                     <!-- the following is not yet implemented -->
-<!--                    <xsl:apply-templates select="tei:orgName" mode="m_add-arabic"/>-->
                 </xsl:when>
             </xsl:choose>
         </xsl:copy>
     </xsl:template>
     
-    <xsl:template match="tei:persName | tei:placeName" mode="m_add-arabic">
+    <xsl:template match="tei:persName | tei:placeName | tei:orgName" mode="m_add-arabic">
         <xsl:copy-of select="pj:entity-names_get-version-from-authority-file(., $v_file-entities-master, 'ar')"/>
-        <xsl:if test="following-sibling::tei:persName | following-sibling::tei:persName">
+        <xsl:if test="following-sibling::tei:persName | following-sibling::tei:orgName | following-sibling::tei:placeName">
             <xsl:text>, </xsl:text>
         </xsl:if>
     </xsl:template>
@@ -126,7 +127,7 @@
         <xsl:copy select="$p_name">
             <xsl:copy-of select="$p_name/@ref"/>
             <xsl:attribute name="xml:lang" select="$p_target-lang"/>
-            <xsl:apply-templates select="$v_entity-name/descendant-or-self::tei:persName/node() | $v_entity-name/descendant-or-self::tei:placeName/node()" mode="m_copy-from-authority-file"/>
+            <xsl:apply-templates select="$v_entity-name/descendant-or-self::tei:persName/node() | $v_entity-name/descendant-or-self::tei:placeName/node() | $v_entity-name/descendant-or-self::tei:orgName/node()" mode="m_copy-from-authority-file"/>
         </xsl:copy>
     </xsl:function>
     
@@ -137,4 +138,21 @@
     </xsl:template>
     
     <xsl:template match="@xml:id | @change" mode="m_copy-from-authority-file"/>
+    
+    <!-- generate documentation of change -->
+    <!-- NOTE: as this XSLT is used by a GitHub action, it is frequently run and will infest the master files with <change> nodes. I, therefore removed the documentation -->
+    <!-- <xsl:template match="tei:revisionDesc" priority="100">
+        <xsl:copy>
+            <xsl:apply-templates select="@*"/>
+            <xsl:element name="change">
+                <xsl:attribute name="when"
+                    select="format-date(current-date(), '[Y0001]-[M01]-[D01]')"/>
+                <xsl:attribute name="who" select="concat('#', $p_id-editor)"/>
+                <xsl:attribute name="xml:id" select="$p_id-change"/>
+                <xsl:attribute name="xml:lang" select="'en'"/>
+                <xsl:text>Updated Arabic content of rows 11 and 12 based on recent changes to the authority file</xsl:text>
+            </xsl:element>
+            <xsl:apply-templates select="node()"/>
+        </xsl:copy>
+    </xsl:template> -->
 </xsl:stylesheet>
