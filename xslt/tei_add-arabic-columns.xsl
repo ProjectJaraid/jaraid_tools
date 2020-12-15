@@ -68,9 +68,9 @@
                 <!-- persons, organisations -->
                 <xsl:when test="@n = 6">
                     <xsl:attribute name="n" select="11"/>
-                    <xsl:apply-templates select="tei:orgName" mode="m_add-arabic"/>
-                    <xsl:apply-templates select="tei:persName" mode="m_add-arabic"/>
-                    <!-- the following is not yet implemented -->
+                    <xsl:apply-templates mode="m_add-arabic"/>
+<!--                    <xsl:apply-templates select="tei:orgName" mode="m_add-arabic"/>-->
+                    <!--<xsl:apply-templates select="tei:persName" mode="m_add-arabic"/>-->
                 </xsl:when>
             </xsl:choose>
         </xsl:copy>
@@ -89,6 +89,8 @@
             <xsl:value-of select="oape:string-transliterate-ijmes-to-arabic(.)"/>
         </xsl:element>
     </xsl:template>
+    <!-- all other nodes should be supressed -->
+    <xsl:template match="node()" mode="m_add-arabic"/>
     
     <xsl:function name="pj:entity-names_get-version-from-authority-file">
         <xsl:param name="p_name"/>
@@ -110,6 +112,7 @@
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
+        <!-- there needs to be some fall back to the target name in cases they are not available in the target language -->
         <xsl:variable name="v_entity-name">
             <xsl:choose>
                 <xsl:when test="$v_type = 'pers'">
