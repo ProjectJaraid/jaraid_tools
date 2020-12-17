@@ -29,7 +29,10 @@
     <!-- transform tables to listBibl -->
     <xsl:template match="tei:table">
         <xsl:element name="listBibl">
-            <xsl:apply-templates/>
+            <xsl:apply-templates select="tei:row">
+                <xsl:sort select="pj:getDate(tei:cell[1]/tei:date[1])" data-type="text"/>
+                <xsl:sort select="tei:cell[4]"/>
+            </xsl:apply-templates>
         </xsl:element>
     </xsl:template>
     
