@@ -9,7 +9,8 @@
     exclude-result-prefixes="xs pj"
     version="3.0">
     <xsl:output encoding="UTF-8" indent="no" omit-xml-declaration="no" method="xml"/>
-    <xsl:include href="/BachUni/BachBibliothek/GitHub/OpenArabicPE/tools/xslt/functions_arabic-transcription.xsl"/>
+    <!--<xsl:include href="/BachUni/BachBibliothek/GitHub/OpenArabicPE/tools/xslt/functions_arabic-transcription.xsl"/>-->
+    <xsl:include href="https://openarabicpe.github.io/tools/xslt/functions_arabic-transcription.xsl"/>
     
     <xsl:param name="p_id-change" select="generate-id(//tei:change[last()])"/>
     <xsl:param name="p_id-editor" select="'pers_TG'"/>
