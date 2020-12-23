@@ -78,7 +78,17 @@
             <xsl:choose>
                 <xsl:when test="@n = (8, 9) and (tei:rs | tei:ref)">
                     <xsl:element name="list">
-                        <xsl:apply-templates mode="m_notes" select="tei:rs | tei:ref"/>
+                        <xsl:for-each-group select="child::node()" group-starting-with="tei:rs">
+                            <xsl:variable name="v_current">
+                                <xsl:value-of select="current-group()"/>
+                            </xsl:variable>
+                            <xsl:if test="normalize-space($v_current)!=''">
+                                <xsl:element name="item">
+                                <xsl:apply-templates mode="m_identity-transform" select="current-group()"/>
+                            </xsl:element>
+                            </xsl:if>
+                        </xsl:for-each-group>
+<!--                        <xsl:apply-templates mode="m_notes" select="tei:rs | tei:ref"/>-->
                     </xsl:element>
                 </xsl:when>
                 <xsl:otherwise>
