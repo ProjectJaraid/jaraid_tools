@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet exclude-result-prefixes="xs pj" version="3.0" xmlns="http://www.tei-c.org/ns/1.0" xmlns:pj="https://projectjaraid.github.io/ns" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xpath-default-namespace="http://www.tei-c.org/ns/1.0">
     <xsl:output encoding="UTF-8" indent="yes" method="xml" omit-xml-declaration="no"/>
+    <xsl:include href="functions.xsl"/>
     <!-- identity transform -->
     <xsl:template match="@* | node()" mode="m_identity-transform">
         <xsl:copy>
@@ -184,6 +185,8 @@
                 </xsl:attribute>
                 <xsl:apply-templates mode="m_plain-text"/>
             </xsl:copy>
+            <!-- arabic script version -->
+            <xsl:copy-of select="pj:entity-names_get-version-from-authority-file(., $v_file-entities-master, 'jaraid', 'ar')"/>
         </pubPlace>
     </xsl:template>
     <xsl:template match="tei:cell[@n = 6]/tei:orgName" mode="m_bibl">
@@ -202,6 +205,8 @@
                 </xsl:attribute>
                 <xsl:apply-templates mode="m_plain-text"/>
             </xsl:copy>
+            <!-- arabic script version -->
+            <xsl:copy-of select="pj:entity-names_get-version-from-authority-file(., $v_file-entities-master, 'jaraid', 'ar')"/>
         </publisher>
     </xsl:template>
     <xsl:template match="tei:cell[@n = 6]/tei:persName" mode="m_bibl">
@@ -220,6 +225,8 @@
                 </xsl:attribute>
                 <xsl:apply-templates mode="m_plain-text"/>
             </xsl:copy>
+            <!-- arabic script version -->
+            <xsl:copy-of select="pj:entity-names_get-version-from-authority-file(., $v_file-entities-master, 'jaraid', 'ar')"/>
         </editor>
     </xsl:template>
     
