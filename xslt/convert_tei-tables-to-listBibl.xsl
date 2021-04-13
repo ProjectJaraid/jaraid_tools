@@ -10,7 +10,7 @@
     <xsl:output encoding="UTF-8" indent="yes" omit-xml-declaration="no" method="xml"/>
     <xsl:include href="convert_tei-row-to-biblstruct_functions.xsl"/>
     
-    <xsl:param name="p_id-change" select="generate-id(//tei:change[last()])"/>
+<!--    <xsl:param name="p_id-change" select="generate-id(//tei:change[last()])"/>-->
     
     <xsl:template match="/">
         <xsl:apply-templates/>

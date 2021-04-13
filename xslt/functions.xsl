@@ -8,7 +8,7 @@
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
     exclude-result-prefixes="xs pj"
     version="3.0">
-    <xsl:output encoding="UTF-8" indent="no" omit-xml-declaration="no" method="xml"/>
+    <xsl:output encoding="UTF-8" indent="yes" omit-xml-declaration="no" method="xml"/>
     <!--<xsl:include href="/BachUni/BachBibliothek/GitHub/OpenArabicPE/tools/xslt/functions_arabic-transcription.xsl"/>-->
     <xsl:include href="https://openarabicpe.github.io/tools/xslt/functions_arabic-transcription.xsl"/>
     
