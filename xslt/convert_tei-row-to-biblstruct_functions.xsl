@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet exclude-result-prefixes="xs pj" version="3.0" xmlns="http://www.tei-c.org/ns/1.0" xmlns:pj="https://projectjaraid.github.io/ns" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xpath-default-namespace="http://www.tei-c.org/ns/1.0">
-    <xsl:output encoding="UTF-8" indent="yes" method="xml" omit-xml-declaration="no"/>
+    <xsl:output encoding="UTF-8" indent="no" method="xml" omit-xml-declaration="no"/>
     <xsl:include href="functions.xsl"/>
     <!-- identity transform -->
     <xsl:template match="@* | node()" mode="m_identity-transform">
@@ -14,7 +14,28 @@
     <!-- transform rows into biblStruct -->
     <xsl:function name="pj:transform-row-to-biblstruct">
         <xsl:param name="tei_row"/>
+        <xsl:variable name="v_type">
+            <xsl:variable name="v_id" select="number(replace($tei_row/@xml:id, 't\dr(\d+)$', '$1'))"/>
+            <xsl:choose>
+                <xsl:when test="870 &lt;= $v_id and $v_id &lt;= 1403">
+                    <xsl:text>newspaper</xsl:text>
+                </xsl:when>
+                <xsl:when test="2349 &lt;= $v_id and $v_id &lt;= 3024">
+                    <xsl:text>newspaper</xsl:text>
+                </xsl:when>
+                <xsl:when test="3025 &lt;= $v_id and $v_id &lt;= 3323">
+                    <xsl:text>journal</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>NA</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
         <biblStruct type="periodical" xml:id="biblStruct_{$tei_row/@xml:id}">
+            <xsl:if test="$v_type != 'NA'">
+                <xsl:attribute name="subtype" select="$v_type"/>
+            </xsl:if>
             <xsl:apply-templates mode="m_identity-transform" select="$tei_row/@resp"/>
             <monogr>
                 <!-- title(s) -->

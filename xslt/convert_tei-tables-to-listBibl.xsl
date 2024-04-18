@@ -7,7 +7,7 @@
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
     exclude-result-prefixes="xs pj"
     version="3.0">
-    <xsl:output encoding="UTF-8" indent="yes" omit-xml-declaration="no" method="xml"/>
+    <xsl:output encoding="UTF-8" indent="no" omit-xml-declaration="no" method="xml"/>
     <xsl:include href="convert_tei-row-to-biblstruct_functions.xsl"/>
     
 <!--    <xsl:param name="p_id-change" select="generate-id(//tei:change[last()])"/>-->
@@ -34,6 +34,27 @@
                 <xsl:sort select="tei:cell[4]"/>
             </xsl:apply-templates>
         </xsl:element>
+    </xsl:template>
+    <xsl:template match="tei:div[@type = 'abbr']" mode="m_institutions">
+        <listOrg>
+            <xsl:apply-templates mode="m_institutions" select="tei:p"/>
+        </listOrg>
+    </xsl:template>
+    <xsl:template match="tei:p" mode="m_institutions">
+        <org>
+            <xsl:copy-of select="@xml:id"/>
+            <xsl:apply-templates select="tei:choice" mode="m_institutions"/>
+            <idno type="jaraid"><xsl:value-of select="@xml:id"/></idno>
+            <xsl:if test="tei:choice/following-sibling::node()[not(matches(.,'^\s+$'))]">
+                <note>
+                    <xsl:copy-of select="tei:choice/following-sibling::node()[not(matches(.,'^\s+$'))]"/>
+                </note>
+            </xsl:if>
+        </org>
+    </xsl:template>
+    <xsl:template match="tei:choice" mode="m_institutions">
+        <orgName><xsl:value-of select="tei:expan"/></orgName>
+        <orgName type="jaraid"><xsl:value-of select="tei:abbr"/></orgName>
     </xsl:template>
     
     <!-- transform rows into biblStruct -->
