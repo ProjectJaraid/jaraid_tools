@@ -9,7 +9,7 @@
     exclude-result-prefixes="xs pj"
     version="3.0">
     <xsl:output encoding="UTF-8" indent="no" omit-xml-declaration="no" method="xml"/>
-    <xsl:include href="/BachUni/BachBibliothek/GitHub/OpenArabicPE/tools/xslt/functions_arabic-transcription.xsl"/>
+    <xsl:include href="/Users/Shared/BachUni/BachBibliothek/GitHub/OpenArabicPE/tools/xslt/functions_arabic-transcription.xsl"/>
     
     <xsl:param name="p_id-change" select="generate-id(//tei:change[last()])"/>
     
@@ -39,9 +39,9 @@
         </xsl:copy>
     </xsl:template>
     
-    <xsl:template match="node()[@xml:lang='ar-Latn-x-ijmes'][not(@type = 'flattened')]" mode="m_translate">
+    <xsl:template match="node()[matches(@xml:lang, '^ar-Latn-')][not(@type = 'flattened')]" mode="m_translate">
         <xsl:variable name="v_self-arabic">
-            <xsl:value-of select="oape:string-transliterate-ijmes-to-arabic(.)"/>
+            <xsl:value-of select="oape:string-transliterate-arabic_latin-to-arabic(.)"/>
         </xsl:variable>
         <!-- reproduce content -->
         <xsl:copy-of select="."/>
